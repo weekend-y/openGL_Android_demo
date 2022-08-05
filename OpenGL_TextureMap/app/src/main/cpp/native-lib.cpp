@@ -42,9 +42,7 @@ Java_com_example_opengl_1texturemap_MyNativeRender_native_1OnDrawFrame(JNIEnv *e
     MyGLRenderContext::GetInstance()->OnDrawFrame();
 }
 
-#ifdef __cplusplus
-}
-#endif
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_opengl_1texturemap_MyNativeRender_native_1SetImageData
@@ -58,4 +56,6 @@ Java_com_example_opengl_1texturemap_MyNativeRender_native_1SetImageData
 }
 
 
-
+#ifdef __cplusplus
+}
+#endif
