@@ -168,6 +168,16 @@ public class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetect
 
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
+        float preSpan = detector.getPreviousSpan();
+        float curSpan = detector.getCurrentSpan();
+        if (curSpan < preSpan) {
+            mCurScale = mPreScale - (preSpan - curSpan) / 200;
+        } else {
+            mCurScale = mPreScale + (curSpan - preSpan) / 200;
+        }
+        mCurScale = Math.max(0.05f, Math.min(mCurScale, 80.0f));
+        mGLRender.updateTransformMatrix(mXAngle, mYAngle, mCurScale, mCurScale);
+        requestRender();
         return false;
     }
 
