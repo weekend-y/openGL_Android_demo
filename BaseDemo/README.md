@@ -1,2 +1,0 @@
-# openGL_Android_demo
-Android平台上使用openGL进行开发的demo集合仓库
