@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.SensorManager;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,9 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
-import static com.example.opengl_texturemap.MyNativeRender.SAMPLE_TYPE;
-import static com.example.opengl_texturemap.MyNativeRender.SAMPLE_TYPE_TEXTURE_MAP;
-import static android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY;
+import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 import static com.example.opengl_texturemap.MyGLSurfaceView.IMAGE_FORMAT_RGBA;
 
 public class MainActivity extends AppCompatActivity implements ViewTreeObserver.OnGlobalLayoutListener {
@@ -31,11 +28,9 @@ public class MainActivity extends AppCompatActivity implements ViewTreeObserver.
     };
     private static final int PERMISSION_REQUEST_CODE = 1;
 
-    private com.example.opengl_texturemap.MyGLSurfaceView mGLSurfaceView;
+    private MyGLSurfaceView mGLSurfaceView;
     private ViewGroup mRootView;
-    private int mSampleSelectedIndex = SAMPLE_TYPE_TEXTURE_MAP - SAMPLE_TYPE;;
-    private com.example.opengl_texturemap.MyGLRender mGLRender = new com.example.opengl_texturemap.MyGLRender();
-    private SensorManager mSensorManager;
+    private MyGLRender mGLRender = new MyGLRender();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements ViewTreeObserver.
         setContentView(R.layout.activity_main);
         mRootView = (ViewGroup) findViewById(R.id.rootView);
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mGLRender.init();
         loadRGBAImage(R.drawable.dzzz);
     }
@@ -54,10 +48,9 @@ public class MainActivity extends AppCompatActivity implements ViewTreeObserver.
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-        mGLSurfaceView = new com.example.opengl_texturemap.MyGLSurfaceView(this, mGLRender);
+        mGLSurfaceView = new MyGLSurfaceView(this, mGLRender);
         mRootView.addView(mGLSurfaceView, lp);
-        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
-
+        mGLSurfaceView.setRenderMode(RENDERMODE_WHEN_DIRTY);
     }
 
 
